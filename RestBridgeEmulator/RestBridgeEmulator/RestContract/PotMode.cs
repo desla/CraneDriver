@@ -18,16 +18,16 @@
         /// <summary>
         /// Замена анодной рамы.
         /// </summary>
- 	    FRAME_CHANGE,
+        FRAME_CHANGE,
 
         /// <summary>
         /// Засыпка/
         /// </summary>
-	    POT_FILL,
+        POT_FILL,
 
         /// <summary>
         /// Заправка бункеров.
         /// </summary>
-	    HOPPER_FILL
+        HOPPER_FILL
     }
 }

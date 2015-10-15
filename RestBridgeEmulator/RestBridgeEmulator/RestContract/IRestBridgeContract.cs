@@ -18,7 +18,7 @@
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getTask/?potroomNumber={aPotroomNumber}")]
+                   UriTemplate = "/getShiftTask/?potroomNumber={aPotroomNumber}")]
         [Description("Возвращает полное описание задания на смену.")]
         TaskDescription GetTaskDescription(string aPotroomNumber);
 
@@ -38,18 +38,10 @@
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getAnodeState/all/?potroomNumber={aPotroomNumber}" +
+                   UriTemplate = "/getAnodesStates/?potroomNumber={aPotroomNumber}" +
                                                     "&potNumber={aPotNumber}")]
         [Description("Возвращает текущие статусы всех анодов в корпусе на электролизере.")]
         AnodeStateDescription[] GetAnodesStates(string aPotroomNumber, string aPotNumber);
-
-        [OperationContract]
-        [WebInvoke(Method = "GET",
-                   UriTemplate = "/getAnodeState/?potroomNumber={aPotroomNumber}" +
-                                                "&potNumber={aPotNumber}" +
-                                                "&anodeNumber={aAnodeNumber}")]
-        [Description("Возвращает текущие статусы всех анодов в корпусе на электролизере.")]
-        AnodeStateDescription GetAnodeState(string aPotroomNumber, string aPotNumber, string aAnodeNumber);
 
         [OperationContract]
         [WebInvoke(Method = "GET",

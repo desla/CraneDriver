@@ -19,7 +19,7 @@
         [DataMember(Order = 3, Name = "anodeNumber")]
         public int AnodeNumber { get; set; }
 
-        [DataMember(Order = 3, Name = "currentAnodeState")]
+        [DataMember(Order = 4, Name = "currentAnodeState")]
         public string AnodeStateString
         {
             get { return state.ToString(); }
