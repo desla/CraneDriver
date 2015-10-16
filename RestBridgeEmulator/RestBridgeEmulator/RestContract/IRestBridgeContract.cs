@@ -8,7 +8,7 @@
     /// Контракт - API для rest-сервиса.
     /// </summary>
     [ServiceContract]
-    internal interface IRestBridgeContract
+    public interface IRestBridgeContract
     {
         [OperationContract]
         [WebInvoke(Method = "GET",
@@ -34,7 +34,7 @@
                                              "&potNumber={aPotNumber}" +
                                              "&potMode={aPotMode}")]
         [Description("Выполняет запрос на изменение режима работы электролизера.")]
-        PotMode SetPotMode(string aPotroomNumber, string aPotNumber, string aPotMode);
+        PotModeDescription SetPotMode(string aPotroomNumber, string aPotNumber, string aPotMode);
 
         [OperationContract]
         [WebInvoke(Method = "GET",

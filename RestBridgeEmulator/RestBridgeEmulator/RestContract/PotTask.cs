@@ -10,7 +10,7 @@
     /// Данные для операции "Перетяжка".
     /// </summary>
     [DataContract]
-    internal class PotTask
+    public class PotTask
     {
         /// <summary>
         /// Номер электролизера.
@@ -35,7 +35,7 @@
             }
         }
 
-        [NonSerialized]
+        [IgnoreDataMember]
         public DateTime time;
     }
 }

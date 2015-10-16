@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ArrayOfPotroomNetwork xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <PotroomNetwork>
+    <Ssid>ALVASOFT</Ssid>
+    <PotroomNumber>1</PotroomNumber>
+  </PotroomNetwork>
+  <PotroomNetwork>
+    <Ssid>ALVASOFT</Ssid>
+    <PotroomNumber>2</PotroomNumber>
+  </PotroomNetwork>
+</ArrayOfPotroomNetwork>

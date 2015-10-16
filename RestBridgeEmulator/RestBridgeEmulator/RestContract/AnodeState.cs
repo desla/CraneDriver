@@ -3,7 +3,7 @@
     /// <summary>
     /// Состояния анода.
     /// </summary>
-    internal enum AnodeState
+    public enum AnodeState
     {
         /// <summary>
         /// Пустое состояние.

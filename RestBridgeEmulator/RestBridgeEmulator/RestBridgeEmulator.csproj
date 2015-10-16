@@ -45,6 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Emulator\CastDriverBridgeEmulatorImpl.cs" />
+    <Compile Include="Emulator\Connection.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Connection.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Emulator\JsonContentFormatWrapper.cs" />
     <Compile Include="RestContract\AnodesReplaceTask.cs" />
     <Compile Include="RestContract\AnodeState.cs" />
     <Compile Include="RestContract\AnodeStateDescription.cs" />
@@ -60,6 +67,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Emulator\Connection.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Connection.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="xml\potroomNetwork.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="xml\shiftTask.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

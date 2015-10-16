@@ -3,7 +3,7 @@
     /// <summary>
     /// Режим работы электролизера.
     /// </summary>
-    internal enum PotMode
+    public enum PotMode
     {
         /// <summary>
         /// Автоматический.

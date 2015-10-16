@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<ArrayOfTaskDescription xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TaskDescription>
+    <PotroomNumber>1</PotroomNumber>
+    <AnodesReplaceTasks>
+      <AnodesReplaceTask>
+        <PotNumber>5</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+        <AnodeNumbers>
+          <int>1</int>
+          <int>5</int>
+          <int>7</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>1</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>5</AnodeNumber>
+            <Text>Со склада</Text>
+          </Comment>
+        </Comments>
+      </AnodesReplaceTask>
+      <AnodesReplaceTask>
+        <PotNumber>7</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+        <AnodeNumbers>
+          <int>3</int>
+          <int>8</int>
+          <int>9</int>
+          <int>10</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>3</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>8</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>9</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>10</AnodeNumber>
+            <Text>Со склада</Text>
+          </Comment>
+        </Comments>
+      </AnodesReplaceTask>
+    </AnodesReplaceTasks>
+    <FrameChangeTasks>
+      <PotTask>
+        <PotNumber>1</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+      <PotTask>
+        <PotNumber>2</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+    </FrameChangeTasks>
+    <PotFillTasks>
+      <PotTask>
+        <PotNumber>6</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+      <PotTask>
+        <PotNumber>8</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+      <PotTask>
+        <PotNumber>9</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+    </PotFillTasks>
+    <HopperFillTasks>
+      <PotTask>
+        <PotNumber>3</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+      <PotTask>
+        <PotNumber>4</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+    </HopperFillTasks>
+  </TaskDescription>
+  <TaskDescription>
+    <PotroomNumber>2</PotroomNumber>
+    <AnodesReplaceTasks>
+      <AnodesReplaceTask>
+        <PotNumber>5</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+        <AnodeNumbers>
+          <int>1</int>
+          <int>5</int>
+          <int>7</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>1</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>5</AnodeNumber>
+            <Text>Со склада</Text>
+          </Comment>
+        </Comments>
+      </AnodesReplaceTask>
+      <AnodesReplaceTask>
+        <PotNumber>7</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+        <AnodeNumbers>
+          <int>3</int>
+          <int>8</int>
+          <int>9</int>
+          <int>10</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>3</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>8</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>9</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>10</AnodeNumber>
+            <Text>Со склада</Text>
+          </Comment>
+        </Comments>
+      </AnodesReplaceTask>
+    </AnodesReplaceTasks>
+    <FrameChangeTasks>
+      <PotTask>
+        <PotNumber>1</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+      <PotTask>
+        <PotNumber>2</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+    </FrameChangeTasks>
+    <PotFillTasks>
+      <PotTask>
+        <PotNumber>6</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+      <PotTask>
+        <PotNumber>8</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+      <PotTask>
+        <PotNumber>9</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+    </PotFillTasks>
+    <HopperFillTasks>
+      <PotTask>
+        <PotNumber>3</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+      <PotTask>
+        <PotNumber>4</PotNumber>
+        <TimeString>16.10.2015 12:42:44</TimeString>
+      </PotTask>
+    </HopperFillTasks>
+  </TaskDescription>
+</ArrayOfTaskDescription>

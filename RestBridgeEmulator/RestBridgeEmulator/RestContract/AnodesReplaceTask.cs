@@ -10,7 +10,7 @@
     /// Задание для операции "Замена анодов".
     /// </summary>
     [DataContract]
-    internal class AnodesReplaceTask
+    public class AnodesReplaceTask
     {
         /// <summary>
         /// Номер электролизера.
@@ -46,7 +46,7 @@
         [DataMember(Order = 4, Name = "anodesComments")]
         public Comment[] Comments { get; set; }
 
-        [NonSerialized]
+        [IgnoreDataMember]
         public DateTime time;
     }
 }

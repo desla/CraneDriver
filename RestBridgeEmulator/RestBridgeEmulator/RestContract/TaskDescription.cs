@@ -6,7 +6,7 @@
     /// Полное задание на смену в корпусе.
     /// </summary>
     [DataContract]
-    internal class TaskDescription
+    public class TaskDescription
     {
         /// <summary>
         /// Номер корпуса.

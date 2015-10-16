@@ -8,7 +8,7 @@
     /// <summary>
     /// Описание состояния анода.
     /// </summary>
-    internal class AnodeStateDescription
+    public class AnodeStateDescription
     {
         [DataMember(Order = 1, Name = "potroomNumber")]
         public int PotroomNumber { get; set; }
@@ -42,7 +42,7 @@
             }
         }
 
-        [NonSerialized]
+        [IgnoreDataMember]
         public AnodeState state;
     }
 }

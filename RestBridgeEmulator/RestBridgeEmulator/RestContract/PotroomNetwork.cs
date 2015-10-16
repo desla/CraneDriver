@@ -6,7 +6,7 @@
     /// Описание связки SSID точки досутпа - номер корпуса.
     /// </summary>
     [DataContract]
-    internal class PotroomNetwork
+    public class PotroomNetwork
     {
         /// <summary>
         /// SSID точки доступа.

@@ -9,7 +9,7 @@
     /// Описание режима работы электролизера.
     /// </summary>
     [DataContract]
-    internal class PotModeDescription
+    public class PotModeDescription
     {
         [DataMember(Order = 1, Name = "potroomNumber")]
         public int PotroomNumber { get; set; }
@@ -40,7 +40,7 @@
             }
         }
 
-        [NonSerialized]
+        [IgnoreDataMember]
         public PotMode mode;
     }
 }

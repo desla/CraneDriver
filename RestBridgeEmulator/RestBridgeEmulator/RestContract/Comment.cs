@@ -6,7 +6,7 @@
     /// Комментарии к анодам для замены.
     /// </summary>
     [DataContract]
-    internal class Comment
+    public class Comment
     {
         [DataMember(Order = 1, Name = "anodeNumber")]
         public int AnodeNumber { get; set; }
