@@ -24,7 +24,7 @@
         [DataMember(Order = 2, Name = "time")]
         public string TimeString
         {
-            get { return time.ToString(CultureInfo.CurrentCulture); }
+            get { return time.ToString("o"); }
             set
             {
                 if (!DateTime.TryParse(value, out time)) {

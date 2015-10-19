@@ -8,6 +8,7 @@
     /// <summary>
     /// Описание состояния анода.
     /// </summary>
+    [DataContract]
     public class AnodeStateDescription
     {
         [DataMember(Order = 1, Name = "potroomNumber")]
@@ -29,7 +30,7 @@
                     var names = Enum.GetNames(typeof(AnodeState));
                     var validValues = string.Empty;
                     for (var i = 0; i < names.Length; ++i) {
-                        validValues += names[0];
+                        validValues += names[i];
                         if (i < names.Length - 1) {
                             validValues += ", ";
                         }
@@ -41,6 +42,27 @@
                 }
             }
         }
+        
+        [DataMember(Order = 5, Name = "operationTime", EmitDefaultValue = false)]
+        public string OperationTimeString
+        {
+            get
+            {
+                return operationTime == DateTime.MinValue ? null : operationTime.ToString("o");
+            }
+
+            set
+            {
+                if (!DateTime.TryParse(value, out operationTime)) {
+                    throw new WebFaultException<string>(
+                        string.Format("Не удалось привести '{0}' ко времени.", value),
+                        HttpStatusCode.NotAcceptable);
+                }
+            }
+        }
+
+        [IgnoreDataMember]
+        public DateTime operationTime;
 
         [IgnoreDataMember]
         public AnodeState state;

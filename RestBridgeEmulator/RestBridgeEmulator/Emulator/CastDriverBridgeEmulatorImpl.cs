@@ -18,8 +18,7 @@
         private PotroomNetwork[] potroomNetwork;
         private TaskDescription[] tasks;
         private PotModeDescription[] potsModes;
-        private AnodeStateDescription[] anodesStates; 
-
+        private AnodeStateDescription[] anodesStates;
 
         public CastDriverBridgeEmulatorImpl()
         {
@@ -91,10 +90,33 @@
         {
             Console.WriteLine("Запрос на изменение режима работы электролизера {0} " +
                               "в корпусе {1}, режим: {2}", aPotNumber, aPotroomNumber, aPotMode);
-            var potModeDescription = GetPotMode(aPotroomNumber, aPotNumber);
-            potModeDescription.PotModeString = aPotMode;
+            int potroomNumber;
+            if (!int.TryParse(aPotroomNumber, out potroomNumber)) {
+                throw new WebFaultException<string>(
+                    String.Format("Не удалось привести {0} к типу int.", aPotroomNumber),
+                    HttpStatusCode.InternalServerError);
+            }
 
-            return potModeDescription;
+            int potNumber;
+            if (!int.TryParse(aPotNumber, out potNumber)) {
+                throw new WebFaultException<string>(
+                    String.Format("Не удалось привести {0} к типу int.", aPotNumber),
+                    HttpStatusCode.InternalServerError);
+            }            
+
+            foreach (var potModeDescription in potsModes) {
+                if (potModeDescription.PotroomNumber == potroomNumber &&
+                    potModeDescription.PotNumber == potNumber) {
+                    potModeDescription.PotModeString = aPotMode;
+                    return potModeDescription;
+                }
+            }
+
+            throw new WebFaultException<string>(
+                    String.Format("Электролизер с номером корпуса {0} " +
+                                  "и номером электролизера {1} не найден.",
+                                  potroomNumber, potNumber),
+                    HttpStatusCode.NotFound);
         }
 
         public AnodeStateDescription[] GetAnodesStates(string aPotroomNumber, string aPotNumber)
@@ -136,8 +158,22 @@
         public AnodeStateDescription SetAnodeState(string aPotroomNumber, string aPotNumber, string aAnodeNumber, string aAnodeState)
         {
             Console.WriteLine("Запрос на изменение состояния анода {0} " +
-                              "в корпусе {1} наэлектролизере {2}, состояние: {3}", 
+                              "в корпусе {1} на электролизере {2}, состояние: {3}", 
                               aAnodeNumber, aPotroomNumber, aPotNumber, aAnodeState);
+            int potroomNumber;
+            if (!int.TryParse(aPotroomNumber, out potroomNumber)) {
+                throw new WebFaultException<string>(
+                    String.Format("Не удалось привести {0} к типу int.", aPotroomNumber),
+                    HttpStatusCode.InternalServerError);
+            }
+
+            int potNumber;
+            if (!int.TryParse(aPotNumber, out potNumber)) {
+                throw new WebFaultException<string>(
+                    String.Format("Не удалось привести {0} к типу int.", aPotNumber),
+                    HttpStatusCode.InternalServerError);
+            }
+
             int anodeNumber;
             if (!int.TryParse(aAnodeNumber, out anodeNumber)) {
                 throw new WebFaultException<string>(
@@ -145,20 +181,29 @@
                     HttpStatusCode.InternalServerError);
             }
 
-            var anodesStates = GetAnodesStates(aPotroomNumber, aPotroomNumber);
-            var anodeStateDescription = anodesStates.FirstOrDefault(a => a.AnodeNumber == anodeNumber);
-            if (anodeStateDescription == null) {
-                throw new WebFaultException<string>(
+            for (var i = 0; i < anodesStates.Length; ++i) {             
+                var anodeStateDescription = anodesStates[i];
+                if (anodeStateDescription.PotroomNumber == potroomNumber &&
+                    anodeStateDescription.PotNumber == potNumber &&
+                    anodeStateDescription.AnodeNumber == anodeNumber) {
+
+                    anodeStateDescription.AnodeStateString = aAnodeState;                    
+                    anodeStateDescription.operationTime = DateTime.Now;
+
+                    if (anodeStateDescription.state == AnodeState.CANCELED_ANODE_REPLACE) {
+                        anodeStateDescription.state = AnodeState.NEED_ANODE_REPLACE;
+                    }
+
+                    return anodeStateDescription;
+                }
+            }
+
+            throw new WebFaultException<string>(
                     String.Format("Анода с номером корпуса {0}, " +
                                   "номером электролизера {1} и " +
                                   "номером анода {2} не найдено.",
                                   aPotroomNumber, aPotNumber, anodeNumber),
                     HttpStatusCode.NotFound);
-            }
-
-            anodeStateDescription.AnodeStateString = aAnodeState;
-
-            return anodeStateDescription;
         }
 
         private void LoadAnodesStates()
@@ -170,11 +215,26 @@
                         PotroomNumber = potsModes[i].PotroomNumber,
                         PotNumber = potsModes[i].PotNumber,
                         AnodeNumber = j+1,
-                        state = AnodeState.EMPTY
+                        state = AnodeState.EMPTY,
+                        operationTime = DateTime.MinValue
                     });
                 }
             }
 
+            foreach (var task in tasks) {
+                foreach (var anodesReplaceTask in task.AnodesReplaceTasks) {
+                    foreach (var anodeNumber in anodesReplaceTask.AnodeNumbers) {
+                        foreach (var anodeStateDescription in states) {
+                            if (anodeStateDescription.PotroomNumber == task.PotroomNumber &&
+                                anodeStateDescription.PotNumber == anodesReplaceTask.PotNumber &&
+                                anodeStateDescription.AnodeNumber == anodeNumber) {
+                                anodeStateDescription.state = AnodeState.NEED_ANODE_REPLACE;                                
+                            }
+                        }
+                    }
+                }
+            }
+            
             anodesStates = states.ToArray();
         }
 

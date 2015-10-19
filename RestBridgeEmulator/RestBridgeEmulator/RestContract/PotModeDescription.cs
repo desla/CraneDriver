@@ -27,7 +27,7 @@
                     var names = Enum.GetNames(typeof (PotMode));
                     var validValues = string.Empty;
                     for (var i = 0; i < names.Length; ++i) {
-                        validValues += names[0];
+                        validValues += names[i];
                         if (i < names.Length - 1) {
                             validValues += ", ";
                         }
