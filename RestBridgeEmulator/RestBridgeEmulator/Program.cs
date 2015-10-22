@@ -12,7 +12,7 @@
         static void Main(string[] args)
         {
             Console.WriteLine("Инициализация...");
-            var properties = Connection.Default;
+            var properties = ConnectionSettings.Default;
             var baseUrl = new Uri(properties.host);
 
             var contractType = typeof (IRestBridgeContract);

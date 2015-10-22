@@ -43,7 +43,7 @@
             }
         }
         
-        [DataMember(Order = 5, Name = "operationTime", EmitDefaultValue = false)]
+        [DataMember(Order = 5, Name = "lastUpdateTime", EmitDefaultValue = false)]
         public string OperationTimeString
         {
             get

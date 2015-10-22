@@ -16,7 +16,7 @@
     internal class CastDriverBridgeEmulatorImpl : IRestBridgeContract
     {
         private PotroomNetwork[] potroomNetwork;
-        private TaskDescription[] tasks;
+        private ShiftTaskDescription[] shiftTasks;
         private PotModeDescription[] potsModes;
         private AnodeStateDescription[] anodesStates;
 
@@ -34,7 +34,7 @@
             return potroomNetwork;
         }
 
-        public TaskDescription GetTaskDescription(string aPotroomNumber)
+        public ShiftTaskDescription GetTaskDescription(string aPotroomNumber)
         {
             Console.WriteLine("Запрос сменного задания для корпуса " + aPotroomNumber);
             int potroomNumber;
@@ -44,7 +44,7 @@
                     HttpStatusCode.InternalServerError);
             }
 
-            foreach (var taskDescription in tasks) {
+            foreach (var taskDescription in shiftTasks) {
                 if (taskDescription.PotroomNumber == potroomNumber) {
                     return taskDescription;
                 }
@@ -188,11 +188,7 @@
                     anodeStateDescription.AnodeNumber == anodeNumber) {
 
                     anodeStateDescription.AnodeStateString = aAnodeState;                    
-                    anodeStateDescription.operationTime = DateTime.Now;
-
-                    if (anodeStateDescription.state == AnodeState.CANCELED_ANODE_REPLACE) {
-                        anodeStateDescription.state = AnodeState.NEED_ANODE_REPLACE;
-                    }
+                    anodeStateDescription.operationTime = DateTime.Now;                    
 
                     return anodeStateDescription;
                 }
@@ -204,6 +200,63 @@
                                   "номером анода {2} не найдено.",
                                   aPotroomNumber, aPotNumber, anodeNumber),
                     HttpStatusCode.NotFound);
+        }
+
+        public PotroomPotes GetPotroomPotes(string aPotroomNumber)
+        {
+            Console.WriteLine("Запрос электролизеров в корпусе {0} ", aPotroomNumber);
+            int potroomNumber;
+            if (!int.TryParse(aPotroomNumber, out potroomNumber)) {
+                throw new WebFaultException<string>(
+                    String.Format("Не удалось привести {0} к типу int.", aPotroomNumber),
+                    HttpStatusCode.InternalServerError);
+            }
+
+            var potes = new List<int>();
+            foreach (var potModeDescription in potsModes) {
+                if (potModeDescription.PotroomNumber == potroomNumber) {
+                    potes.Add(potModeDescription.PotNumber);
+                }
+            }
+
+            if (potes.Count == 0) {
+                throw new WebFaultException<string>(
+                    string.Format("Корпус с номером {0} не найден.", potroomNumber),
+                    HttpStatusCode.NotFound);
+            }
+
+            return new PotroomPotes {
+                PotroomNumber = potroomNumber,
+                Potes = potes.ToArray()
+            };
+        }
+
+        public AnodeStatesColors GetAnodeStatesColors()
+        {
+            var properties = ColorsSettings.Default;
+            return new AnodeStatesColors {
+                Empty = properties.EMPTY,
+                AnodeReplaced = properties.ANODE_REPLACED,
+                CanceledAnodeReplace = properties.CANCELED_ANODE_REPLACE,
+                NeedAnodeReplace = properties.NEED_ANODE_REPLACE
+            };
+        }
+
+        public SoftDescription GetSoftDescription()
+        {
+            var properties = VersionSettings.Default;
+            return new SoftDescription {
+                Version = Convert.ToInt32(properties.Version),
+                Source = properties.SourceUrl
+            };
+        }
+
+        public ShiftTaskInterval GetShiftTaskInterval()
+        {
+            var properties = VersionSettings.Default;
+            return new ShiftTaskInterval {
+                Interval = Convert.ToInt32(properties.ShiftTaskRequestInterval)
+            };
         }
 
         private void LoadAnodesStates()
@@ -221,7 +274,7 @@
                 }
             }
 
-            foreach (var task in tasks) {
+            foreach (var task in shiftTasks) {
                 foreach (var anodesReplaceTask in task.AnodesReplaceTasks) {
                     foreach (var anodeNumber in anodesReplaceTask.AnodeNumbers) {
                         foreach (var anodeStateDescription in states) {
@@ -256,9 +309,9 @@
 
         private void LoadTasks()
         {
-            var serializer = new XmlSerializer(typeof(TaskDescription[]));
+            var serializer = new XmlSerializer(typeof(ShiftTaskDescription[]));
             using (var file = new FileStream("xml/shiftTask.xml", FileMode.Open)) {
-                tasks = (TaskDescription[])serializer.Deserialize(file);
+                shiftTasks = (ShiftTaskDescription[])serializer.Deserialize(file);
             }
         }
 

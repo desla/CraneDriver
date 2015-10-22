@@ -46,30 +46,52 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Emulator\CastDriverBridgeEmulatorImpl.cs" />
-    <Compile Include="Emulator\Connection.Designer.cs">
+    <Compile Include="Emulator\ColorsSettings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Connection.settings</DependentUpon>
+      <DependentUpon>ColorsSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Emulator\ConnectionSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>ConnectionSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Emulator\JsonContentFormatWrapper.cs" />
+    <Compile Include="Emulator\VersionSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>VersionSettings.settings</DependentUpon>
+    </Compile>
     <Compile Include="RestContract\AnodesReplaceTask.cs" />
     <Compile Include="RestContract\AnodeState.cs" />
     <Compile Include="RestContract\AnodeStateDescription.cs" />
+    <Compile Include="RestContract\AnodeStatesColors.cs" />
     <Compile Include="RestContract\Comment.cs" />
+    <Compile Include="RestContract\PotroomPotes.cs" />
     <Compile Include="RestContract\PotMode.cs" />
     <Compile Include="RestContract\PotModeDescription.cs" />
     <Compile Include="RestContract\PotTask.cs" />
     <Compile Include="RestContract\IRestBridgeContract.cs" />
     <Compile Include="RestContract\PotroomNetwork.cs" />
-    <Compile Include="RestContract\TaskDescription.cs" />
+    <Compile Include="RestContract\ShiftTaskInterval.cs" />
+    <Compile Include="RestContract\SoftDescription.cs" />
+    <Compile Include="RestContract\ShiftTaskDescription.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Emulator\Connection.settings">
+    <None Include="Emulator\ColorsSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Connection.Designer.cs</LastGenOutput>
+      <LastGenOutput>ColorsSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Emulator\ConnectionSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ConnectionSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Emulator\VersionSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>VersionSettings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

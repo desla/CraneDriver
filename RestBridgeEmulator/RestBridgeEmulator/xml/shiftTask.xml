@@ -1,7 +1,8 @@
-<?xml version="1.0"?>
-<ArrayOfTaskDescription xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <TaskDescription>
+﻿<?xml version="1.0"?>
+<ArrayOfShiftTaskDescription xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ShiftTaskDescription>
     <PotroomNumber>1</PotroomNumber>
+    <LastUpdateTime>16.10.2015 12:42:44</LastUpdateTime>
     <AnodesReplaceTasks>
       <AnodesReplaceTask>
         <PotNumber>5</PotNumber>
@@ -85,9 +86,10 @@
         <TimeString>16.10.2015 12:42:44</TimeString>
       </PotTask>
     </HopperFillTasks>
-  </TaskDescription>
-  <TaskDescription>
+  </ShiftTaskDescription>
+  <ShiftTaskDescription>
     <PotroomNumber>2</PotroomNumber>
+    <LastUpdateTime>16.10.2015 12:42:44</LastUpdateTime>
     <AnodesReplaceTasks>
       <AnodesReplaceTask>
         <PotNumber>5</PotNumber>
@@ -171,5 +173,5 @@
         <TimeString>16.10.2015 12:42:44</TimeString>
       </PotTask>
     </HopperFillTasks>
-  </TaskDescription>
-</ArrayOfTaskDescription>
+  </ShiftTaskDescription>
+</ArrayOfShiftTaskDescription>

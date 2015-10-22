@@ -20,7 +20,7 @@
         [WebInvoke(Method = "GET",
                    UriTemplate = "/getShiftTask/?potroomNumber={aPotroomNumber}")]
         [Description("Возвращает полное описание задания на смену.")]
-        TaskDescription GetTaskDescription(string aPotroomNumber);
+        ShiftTaskDescription GetTaskDescription(string aPotroomNumber);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
@@ -51,5 +51,29 @@
                                                 "&anodeState={aAnodeState}")]
         [Description("Возвращает текущие статусы всех анодов в корпусе на электролизере.")]
         AnodeStateDescription SetAnodeState(string aPotroomNumber, string aPotNumber, string aAnodeNumber, string aAnodeState);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+                   UriTemplate = "/getPotroomPotes/?potroomNumber={aPotroomNumber}")]
+        [Description("Возвращает список всех анодов в корпусе.")]
+        PotroomPotes GetPotroomPotes(string aPotroomNumber);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+                   UriTemplate = "/getAnodeStatesColors/")]
+        [Description("Возвращает список цветов для состояний анодов.")]
+        AnodeStatesColors GetAnodeStatesColors();
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+                   UriTemplate = "/getSoftDescription/")]
+        [Description("Возвращает текущее описание ПО.")]
+        SoftDescription GetSoftDescription();
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+                   UriTemplate = "/getShiftTaskInterval/")]
+        [Description("Возвращает интервал запроса задания на смену.")]
+        ShiftTaskInterval GetShiftTaskInterval();
     }
 }

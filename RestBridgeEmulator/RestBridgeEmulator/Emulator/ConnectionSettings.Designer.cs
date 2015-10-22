@@ -13,11 +13,11 @@ namespace RestBridgeEmulator.Emulator {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
-    internal sealed partial class Connection : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class ConnectionSettings : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Connection defaultInstance = ((Connection)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Connection())));
+        private static ConnectionSettings defaultInstance = ((ConnectionSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ConnectionSettings())));
         
-        public static Connection Default {
+        public static ConnectionSettings Default {
             get {
                 return defaultInstance;
             }
