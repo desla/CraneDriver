@@ -2,7 +2,7 @@
 <ArrayOfShiftTaskDescription xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ShiftTaskDescription>
     <PotroomNumber>1</PotroomNumber>
-    <LastUpdateTime>16.10.2015 12:42:44</LastUpdateTime>
+    <LastUpdateTimeString>16.10.2015 12:42:44</LastUpdateTimeString>
     <AnodesReplaceTasks>
       <AnodesReplaceTask>
         <PotNumber>5</PotNumber>
@@ -89,7 +89,7 @@
   </ShiftTaskDescription>
   <ShiftTaskDescription>
     <PotroomNumber>2</PotroomNumber>
-    <LastUpdateTime>16.10.2015 12:42:44</LastUpdateTime>
+    <LastUpdateTimeString>16.10.2015 12:42:44</LastUpdateTimeString>
     <AnodesReplaceTasks>
       <AnodesReplaceTask>
         <PotNumber>5</PotNumber>
