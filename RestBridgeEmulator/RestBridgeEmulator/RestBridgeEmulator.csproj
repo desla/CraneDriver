@@ -38,6 +38,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,6 +57,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>ConnectionSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Emulator\ArgumentConverter.cs" />
     <Compile Include="Emulator\JsonContentFormatWrapper.cs" />
     <Compile Include="Emulator\VersionSettings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -100,6 +102,7 @@
     </Content>
     <Content Include="xml\shiftTask.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

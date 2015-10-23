@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
     using System.Net;
     using System.ServiceModel;
     using System.ServiceModel.Web;
+    using System.Web;
     using System.Xml.Serialization;
     using RestContract;
 
@@ -26,23 +26,24 @@
             LoadTasks();
             LoadPotsModes();
             LoadAnodesStates();
-        }        
+        }
 
-        public PotroomNetwork[] GetPotroomsNetwork()
+        public PotroomNetwork[] GetPotroomsNetwork(string aCraneNumber)
         {
             Console.WriteLine("Запрос списка соответствия ssid точек доступа номерам корпусов.");
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
+
             return potroomNetwork;
         }
 
-        public ShiftTaskDescription GetTaskDescription(string aPotroomNumber)
+        public ShiftTaskDescription GetTaskDescription(string aCraneNumber, string aPotroomNumber)
         {
             Console.WriteLine("Запрос сменного задания для корпуса " + aPotroomNumber);
-            int potroomNumber;
-            if (!int.TryParse(aPotroomNumber, out potroomNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotroomNumber), 
-                    HttpStatusCode.InternalServerError);
-            }
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
+
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
 
             foreach (var taskDescription in shiftTasks) {
                 if (taskDescription.PotroomNumber == potroomNumber) {
@@ -55,22 +56,14 @@
                     HttpStatusCode.NotFound);
         }
 
-        public PotModeDescription GetPotMode(string aPotroomNumber, string aPotNumber)
+        public PotModeDescription GetPotMode(string aCraneNumber, string aPotroomNumber, string aPotNumber)
         {
             Console.WriteLine("Запрос режима работы электролизера {0} в корпусе {1}", aPotNumber, aPotroomNumber);
-            int potroomNumber;
-            if (!int.TryParse(aPotroomNumber, out potroomNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotroomNumber),
-                    HttpStatusCode.InternalServerError);
-            }
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
 
-            int potNumber;
-            if (!int.TryParse(aPotNumber, out potNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotNumber),
-                    HttpStatusCode.InternalServerError);
-            }
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber);
 
             foreach (var potModeDescription in potsModes) {
                 if (potModeDescription.PotroomNumber == potroomNumber &&
@@ -86,23 +79,15 @@
                     HttpStatusCode.NotFound);
         }
 
-        public PotModeDescription SetPotMode(string aPotroomNumber, string aPotNumber, string aPotMode)
+        public PotModeDescription SetPotMode(string aCraneNumber, string aPotroomNumber, string aPotNumber, string aPotMode)
         {
             Console.WriteLine("Запрос на изменение режима работы электролизера {0} " +
                               "в корпусе {1}, режим: {2}", aPotNumber, aPotroomNumber, aPotMode);
-            int potroomNumber;
-            if (!int.TryParse(aPotroomNumber, out potroomNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotroomNumber),
-                    HttpStatusCode.InternalServerError);
-            }
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
 
-            int potNumber;
-            if (!int.TryParse(aPotNumber, out potNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotNumber),
-                    HttpStatusCode.InternalServerError);
-            }            
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber);      
 
             foreach (var potModeDescription in potsModes) {
                 if (potModeDescription.PotroomNumber == potroomNumber &&
@@ -119,23 +104,16 @@
                     HttpStatusCode.NotFound);
         }
 
-        public AnodeStateDescription[] GetAnodesStates(string aPotroomNumber, string aPotNumber)
+        public AnodeStateDescription[] GetAnodesStates(string aCraneNumber, string aPotroomNumber, string aPotNumber)
         {
             Console.WriteLine("Запрос состояния анодов в корпусе {0} " +
                               "на электролизере {1}", aPotroomNumber, aPotNumber);
-            int potroomNumber;
-            if (!int.TryParse(aPotroomNumber, out potroomNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotroomNumber),
-                    HttpStatusCode.InternalServerError);
-            }
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
 
-            int potNumber;
-            if (!int.TryParse(aPotNumber, out potNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotNumber),
-                    HttpStatusCode.InternalServerError);
-            }
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber);
+
             var result = new List<AnodeStateDescription>();
             foreach (var anodeStateDescription in anodesStates) {
                 if (anodeStateDescription.PotroomNumber == potroomNumber &&
@@ -155,31 +133,17 @@
             return result.ToArray();            
         }
 
-        public AnodeStateDescription SetAnodeState(string aPotroomNumber, string aPotNumber, string aAnodeNumber, string aAnodeState)
+        public AnodeStateDescription SetAnodeState(string aCraneNumber, string aPotroomNumber, string aPotNumber, string aAnodeNumber, string aAnodeState)
         {
             Console.WriteLine("Запрос на изменение состояния анода {0} " +
                               "в корпусе {1} на электролизере {2}, состояние: {3}", 
                               aAnodeNumber, aPotroomNumber, aPotNumber, aAnodeState);
-            int potroomNumber;
-            if (!int.TryParse(aPotroomNumber, out potroomNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotroomNumber),
-                    HttpStatusCode.InternalServerError);
-            }
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
 
-            int potNumber;
-            if (!int.TryParse(aPotNumber, out potNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotNumber),
-                    HttpStatusCode.InternalServerError);
-            }
-
-            int anodeNumber;
-            if (!int.TryParse(aAnodeNumber, out anodeNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aAnodeNumber),
-                    HttpStatusCode.InternalServerError);
-            }
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber);
+            var anodeNumber = ArgumentConverter.ToInt32(aAnodeNumber);
 
             for (var i = 0; i < anodesStates.Length; ++i) {             
                 var anodeStateDescription = anodesStates[i];
@@ -202,15 +166,13 @@
                     HttpStatusCode.NotFound);
         }
 
-        public PotroomPotes GetPotroomPotes(string aPotroomNumber)
+        public PotroomPotes GetPotroomPotes(string aCraneNumber, string aPotroomNumber)
         {
             Console.WriteLine("Запрос электролизеров в корпусе {0} ", aPotroomNumber);
-            int potroomNumber;
-            if (!int.TryParse(aPotroomNumber, out potroomNumber)) {
-                throw new WebFaultException<string>(
-                    String.Format("Не удалось привести {0} к типу int.", aPotroomNumber),
-                    HttpStatusCode.InternalServerError);
-            }
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
+
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);            
 
             var potes = new List<int>();
             foreach (var potModeDescription in potsModes) {
@@ -231,8 +193,12 @@
             };
         }
 
-        public AnodeStatesColors GetAnodeStatesColors()
+        public AnodeStatesColors GetAnodeStatesColors(string aCraneNumber)
         {
+            Console.WriteLine("Запрос цветов для состояний анодов.");
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
+
             var properties = ColorsSettings.Default;
             return new AnodeStatesColors {
                 Empty = properties.EMPTY,
@@ -242,8 +208,12 @@
             };
         }
 
-        public SoftDescription GetSoftDescription()
+        public SoftDescription GetSoftDescription(string aCraneNumber)
         {
+            Console.WriteLine("Запрос версии ПО и ссылки для скачивания APK файла.");
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
+
             var properties = VersionSettings.Default;
             return new SoftDescription {
                 Version = Convert.ToInt32(properties.Version),
@@ -251,13 +221,28 @@
             };
         }
 
-        public ShiftTaskInterval GetShiftTaskInterval()
+        public ShiftTaskInterval GetShiftTaskInterval(string aCraneNumber)
         {
+            Console.WriteLine("Запрос интервала получения заданий на смену.");
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
+
             var properties = VersionSettings.Default;
             return new ShiftTaskInterval {
                 Interval = Convert.ToInt32(properties.ShiftTaskRequestInterval)
             };
         }
+
+        public string GetCurrentTime(string aCraneNumber)
+        {
+            Console.WriteLine("Запрос текущего времени сервера.");
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Номер крана: " + cranNumber);
+
+            return DateTime.Now.ToString("o");
+        }
+        
+        #region Инициализация        
 
         private void LoadAnodesStates()
         {
@@ -322,5 +307,7 @@
                 potroomNetwork = (PotroomNetwork[])serializer.Deserialize(file);
             }
         }
+
+        #endregion
     }
 }
