@@ -13,27 +13,27 @@
     {
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getPotroomsNetwork/?cranNumber={aCraneNumber}")]
+                   UriTemplate = "/getPotroomsNetwork/?craneNumber={aCraneNumber}")]
         [Description("Возвращает список соответствия ssid точек доступа wi-fi к номеру корпуса завода.")]
         PotroomNetwork[] GetPotroomsNetwork(string aCraneNumber);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getShiftTask/?cranNumber={aCraneNumber}" +
+                   UriTemplate = "/getShiftTask/?craneNumber={aCraneNumber}" +
                                                "&potroomNumber={aPotroomNumber}")]
         [Description("Возвращает полное описание задания на смену.")]
         ShiftTaskDescription GetTaskDescription(string aCraneNumber, string aPotroomNumber);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getPotMode/?cranNumber={aCraneNumber}" +
+                   UriTemplate = "/getPotMode/?craneNumber={aCraneNumber}" +
                                              "&potroomNumber={aPotroomNumber}&potNumber={aPotNumber}")]
         [Description("Возвращает текущий режим работы электролизера.")]
         PotModeDescription GetPotMode(string aCraneNumber, string aPotroomNumber, string aPotNumber);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/setPotMode/?cranNumber={aCraneNumber}" +
+                   UriTemplate = "/setPotMode/?craneNumber={aCraneNumber}" +
                                              "&potroomNumber={aPotroomNumber}" +
                                              "&potNumber={aPotNumber}" +
                                              "&potMode={aPotMode}")]
@@ -42,7 +42,7 @@
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getAnodesStates/?cranNumber={aCraneNumber}" +
+                   UriTemplate = "/getAnodesStates/?craneNumber={aCraneNumber}" +
                                                   "&potroomNumber={aPotroomNumber}" +
                                                   "&potNumber={aPotNumber}")]
         [Description("Возвращает текущие статусы всех анодов в корпусе на электролизере.")]
@@ -50,7 +50,7 @@
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/setAnodeState/?cranNumber={aCraneNumber}" +
+                   UriTemplate = "/setAnodeState/?craneNumber={aCraneNumber}" +
                                                 "&potroomNumber={aPotroomNumber}" +
                                                 "&potNumber={aPotNumber}" +
                                                 "&anodeNumber={aAnodeNumber}" +
@@ -61,32 +61,32 @@
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getPotroomPotes/?cranNumber={aCraneNumber}" +
+                   UriTemplate = "/getPotroomPotes/?craneNumber={aCraneNumber}" +
                                                   "&potroomNumber={aPotroomNumber}")]
         [Description("Возвращает список всех анодов в корпусе.")]
         PotroomPotes GetPotroomPotes(string aCraneNumber, string aPotroomNumber);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getAnodeStatesColors/?cranNumber={aCraneNumber}")]
+                   UriTemplate = "/getAnodeStatesColors/?craneNumber={aCraneNumber}")]
         [Description("Возвращает список цветов для состояний анодов.")]
         AnodeStatesColors GetAnodeStatesColors(string aCraneNumber);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getSoftDescription/?cranNumber={aCraneNumber}")]
+                   UriTemplate = "/getSoftDescription/?craneNumber={aCraneNumber}")]
         [Description("Возвращает текущее описание ПО.")]
         SoftDescription GetSoftDescription(string aCraneNumber);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getShiftTaskInterval/?cranNumber={aCraneNumber}")]
+                   UriTemplate = "/getShiftTaskInterval/?craneNumber={aCraneNumber}")]
         [Description("Возвращает интервал запроса задания на смену.")]
         ShiftTaskInterval GetShiftTaskInterval(string aCraneNumber);
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-                   UriTemplate = "/getCurrentTime/?cranNumber={aCraneNumber}")]
+                   UriTemplate = "/getCurrentTime/?craneNumber={aCraneNumber}")]
         [Description("Возвращает текущее время сервера.")]
         string GetCurrentTime(string aCraneNumber);
     }
