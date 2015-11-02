@@ -24,7 +24,7 @@
         [DataMember(Order = 2, Name = "time")]
         public string TimeString
         {
-            get { return time.ToString("o"); }
+            get { return time.ToString(TimeFormates.iso8601); }
             set
             {
                 if (!DateTime.TryParse(value, out time)) {

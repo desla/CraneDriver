@@ -48,7 +48,9 @@
         {
             get
             {
-                return operationTime == DateTime.MinValue ? null : operationTime.ToString("o");
+                return operationTime == DateTime.MinValue ? 
+                    null : 
+                    operationTime.ToString(TimeFormates.iso8601);
             }
 
             set

@@ -1,7 +1,6 @@
 ﻿namespace RestBridgeEmulator.RestContract
 {
-    using System;
-    using System.Globalization;
+    using System;    
     using System.Net;
     using System.Runtime.Serialization;
     using System.ServiceModel.Web;
@@ -23,7 +22,7 @@
         /// </summary>
         [DataMember(Order = 2, Name = "time")]
         public string TimeString {
-            get { return time.ToString("o"); }
+            get { return time.ToString(TimeFormates.iso8601); }
             set
             {                
                 if (!DateTime.TryParse(value, out time)) {

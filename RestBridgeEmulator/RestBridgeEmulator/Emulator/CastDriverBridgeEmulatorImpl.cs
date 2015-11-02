@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Net;
     using System.ServiceModel;
     using System.ServiceModel.Web;
@@ -31,7 +32,7 @@
         public PotroomNetwork[] GetPotroomsNetwork(string aCraneNumber)
         {
             Console.WriteLine("Запрос списка соответствия ssid точек доступа номерам корпусов.");
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
             Console.WriteLine("Номер крана: " + cranNumber);
 
             return potroomNetwork;
@@ -40,10 +41,10 @@
         public ShiftTaskDescription GetTaskDescription(string aCraneNumber, string aPotroomNumber)
         {
             Console.WriteLine("Запрос сменного задания для корпуса " + aPotroomNumber);
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
             Console.WriteLine("Номер крана: " + cranNumber);
 
-            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");
 
             foreach (var taskDescription in shiftTasks) {
                 if (taskDescription.PotroomNumber == potroomNumber) {
@@ -56,14 +57,112 @@
                     HttpStatusCode.NotFound);
         }
 
+        public PotTask AddPotTask(string aCraneNumber, string aPotroomNumber, string aPotNumber, string aTaskType)
+        {
+            Console.WriteLine("Добавление электролизера в сменное задание.");
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");
+
+            var task = shiftTasks.FirstOrDefault(t => t.PotroomNumber == potroomNumber);
+            if (task == null) {
+                throw new WebFaultException<string>(
+                    "Не удалось добавить задачу в сменное задание для корпуса " + potroomNumber,
+                    HttpStatusCode.InternalServerError);
+            }
+
+            switch (aTaskType.ToUpper()) {
+                case "ANODES_REPLACE":
+                    foreach (var anodesReplaceTask in task.AnodesReplaceTasks) {
+                        if (anodesReplaceTask.PotNumber == potNumber) {
+                            throw new WebFaultException<string>(
+                                "Сменное задание на замену анодов уже содержит электролизер с номером " + potNumber, 
+                                HttpStatusCode.Conflict);
+                        }
+                    }
+
+                    var tasks = new List<AnodesReplaceTask>(task.AnodesReplaceTasks);
+                    tasks.Add(new AnodesReplaceTask {
+                        PotNumber = potNumber,
+                        time = DateTime.Now,
+                        AnodeNumbers = new int[0],
+                        Comments = new Comment[0]
+                    });
+
+                    task.AnodesReplaceTasks = tasks.ToArray();
+                    break;
+                case "FRAME_CHANGE":
+                    foreach (var frameTask in task.FrameChangeTasks) {
+                        if (frameTask.PotNumber == potNumber) {
+                            throw new WebFaultException<string>(
+                                "Сменное задание на перетяжку уже содержит электролизер с номером " + potNumber, 
+                                HttpStatusCode.Conflict);
+                        }
+                    }
+
+                    var frameTasks = new List<PotTask>(task.FrameChangeTasks);
+                    frameTasks.Add(new PotTask {
+                        PotNumber = potNumber,
+                        time = DateTime.Now                        
+                    });
+
+                    task.FrameChangeTasks = frameTasks.ToArray();
+                    break;
+                case "POT_FILL":
+                    foreach (var potFillTask in task.PotFillTasks) {
+                        if (potFillTask.PotNumber == potNumber) {
+                            throw new WebFaultException<string>(
+                                "Сменное задание на засыпку уже содержит электролизер с номером " + potNumber, 
+                                HttpStatusCode.Conflict);
+                        }
+                    }
+
+                    var potFillTasks = new List<PotTask>(task.PotFillTasks);
+                    potFillTasks.Add(new PotTask {
+                        PotNumber = potNumber,
+                        time = DateTime.Now                        
+                    });
+
+                    task.PotFillTasks = potFillTasks.ToArray();
+                    break;
+                case "HOPPER_FILL":
+                    foreach (var hopperFillTask in task.HopperFillTasks) {
+                        if (hopperFillTask.PotNumber == potNumber) {
+                            throw new WebFaultException<string>(
+                                "Сменное задание на заправку бункеров уже содержит электролизер " +
+                                "с номером " + potNumber, 
+                                HttpStatusCode.Conflict);
+                        }
+                    }
+
+                    var hopperFillTasks = new List<PotTask>(task.HopperFillTasks);
+                    hopperFillTasks.Add(new PotTask {
+                        PotNumber = potNumber,
+                        time = DateTime.Now                        
+                    });
+
+                    task.HopperFillTasks = hopperFillTasks.ToArray();
+                    break;
+                default:
+                    throw new WebFaultException<string>("Тип операции не найден. Возможные значения: " +
+                                                        "ANODES_REPLACE, FRAME_CHANGE, POT_FILL, HOPPER_FILL.",
+                                                        HttpStatusCode.InternalServerError);
+            }
+
+            return new PotTask {
+                time = DateTime.Now,
+                PotNumber = potNumber
+            };
+        }
+
         public PotModeDescription GetPotMode(string aCraneNumber, string aPotroomNumber, string aPotNumber)
         {
             Console.WriteLine("Запрос режима работы электролизера {0} в корпусе {1}", aPotNumber, aPotroomNumber);
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
             Console.WriteLine("Номер крана: " + cranNumber);
 
-            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
-            var potNumber = ArgumentConverter.ToInt32(aPotNumber);
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");
 
             foreach (var potModeDescription in potsModes) {
                 if (potModeDescription.PotroomNumber == potroomNumber &&
@@ -83,11 +182,11 @@
         {
             Console.WriteLine("Запрос на изменение режима работы электролизера {0} " +
                               "в корпусе {1}, режим: {2}", aPotNumber, aPotroomNumber, aPotMode);
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
             Console.WriteLine("Номер крана: " + cranNumber);
 
-            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
-            var potNumber = ArgumentConverter.ToInt32(aPotNumber);      
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");      
 
             foreach (var potModeDescription in potsModes) {
                 if (potModeDescription.PotroomNumber == potroomNumber &&
@@ -108,11 +207,11 @@
         {
             Console.WriteLine("Запрос состояния анодов в корпусе {0} " +
                               "на электролизере {1}", aPotroomNumber, aPotNumber);
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
             Console.WriteLine("Номер крана: " + cranNumber);
 
-            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
-            var potNumber = ArgumentConverter.ToInt32(aPotNumber);
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");
 
             var result = new List<AnodeStateDescription>();
             foreach (var anodeStateDescription in anodesStates) {
@@ -138,12 +237,12 @@
             Console.WriteLine("Запрос на изменение состояния анода {0} " +
                               "в корпусе {1} на электролизере {2}, состояние: {3}", 
                               aAnodeNumber, aPotroomNumber, aPotNumber, aAnodeState);
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
             Console.WriteLine("Номер крана: " + cranNumber);
 
-            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);
-            var potNumber = ArgumentConverter.ToInt32(aPotNumber);
-            var anodeNumber = ArgumentConverter.ToInt32(aAnodeNumber);
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");
+            var anodeNumber = ArgumentConverter.ToInt32(aAnodeNumber, "Номер анода");
 
             for (var i = 0; i < anodesStates.Length; ++i) {             
                 var anodeStateDescription = anodesStates[i];
@@ -166,13 +265,13 @@
                     HttpStatusCode.NotFound);
         }
 
-        public PotroomPotes GetPotroomPotes(string aCraneNumber, string aPotroomNumber)
+        public PotroomPots GetPotroomPots(string aCraneNumber, string aPotroomNumber)
         {
             Console.WriteLine("Запрос электролизеров в корпусе {0} ", aPotroomNumber);
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
             Console.WriteLine("Номер крана: " + cranNumber);
 
-            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber);            
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");            
 
             var potes = new List<int>();
             foreach (var potModeDescription in potsModes) {
@@ -187,59 +286,40 @@
                     HttpStatusCode.NotFound);
             }
 
-            return new PotroomPotes {
+            return new PotroomPots {
                 PotroomNumber = potroomNumber,
-                Potes = potes.ToArray()
+                Pots = potes.ToArray()
             };
-        }
+        }        
 
-        public AnodeStatesColors GetAnodeStatesColors(string aCraneNumber)
+        public BridgeConfiguration GetConfiguration(string aCraneNumber)
         {
-            Console.WriteLine("Запрос цветов для состояний анодов.");
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
-            Console.WriteLine("Номер крана: " + cranNumber);
-
-            var properties = ColorsSettings.Default;
-            return new AnodeStatesColors {
-                Empty = properties.EMPTY,
-                AnodeReplaced = properties.ANODE_REPLACED,
-                CanceledAnodeReplace = properties.CANCELED_ANODE_REPLACE,
-                NeedAnodeReplace = properties.NEED_ANODE_REPLACE
-            };
-        }
-
-        public SoftDescription GetSoftDescription(string aCraneNumber)
-        {
-            Console.WriteLine("Запрос версии ПО и ссылки для скачивания APK файла.");
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            Console.WriteLine("Запрос конфигурации.");
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
             Console.WriteLine("Номер крана: " + cranNumber);
 
             var properties = VersionSettings.Default;
-            return new SoftDescription {
-                Version = Convert.ToInt32(properties.Version),
-                Source = properties.SourceUrl
-            };
-        }
-
-        public ShiftTaskInterval GetShiftTaskInterval(string aCraneNumber)
-        {
-            Console.WriteLine("Запрос интервала получения заданий на смену.");
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
-            Console.WriteLine("Номер крана: " + cranNumber);
-
-            var properties = VersionSettings.Default;
-            return new ShiftTaskInterval {
-                Interval = Convert.ToInt32(properties.ShiftTaskRequestInterval)
+            var colors = ColorsSettings.Default;
+            return new BridgeConfiguration {
+                Version = properties.Version,
+                Source = properties.SourceUrl,
+                ShiftTaskInterval = Convert.ToInt32(properties.ShiftTaskRequestInterval),
+                Colors = new AnodeStateColor[] {
+                    new AnodeStateColor{ Name = "EMPTY", Color  = colors.EMPTY },
+                    new AnodeStateColor{ Name = "ANODE_REPLACED", Color  = colors.ANODE_REPLACED },
+                    new AnodeStateColor{ Name = "CANCELED_ANODE_REPLACE", Color  = colors.CANCELED_ANODE_REPLACE },
+                    new AnodeStateColor{ Name = "NEED_ANODE_REPLACE", Color  = colors.NEED_ANODE_REPLACE },
+                }
             };
         }
 
         public string GetCurrentTime(string aCraneNumber)
         {
             Console.WriteLine("Запрос текущего времени сервера.");
-            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber);
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
             Console.WriteLine("Номер крана: " + cranNumber);
 
-            return DateTime.Now.ToString("o");
+            return DateTime.Now.ToString(TimeFormates.iso8601);
         }
         
         #region Инициализация        

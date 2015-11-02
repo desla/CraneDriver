@@ -22,7 +22,9 @@
         {
             get
             {
-                return lastUpdateTime == DateTime.MinValue ? null : lastUpdateTime.ToString("o");
+                return lastUpdateTime == DateTime.MinValue 
+                    ? null : 
+                    lastUpdateTime.ToString(TimeFormates.iso8601);
             }
 
             set

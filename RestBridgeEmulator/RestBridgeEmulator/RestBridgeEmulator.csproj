@@ -67,19 +67,19 @@
     <Compile Include="RestContract\AnodesReplaceTask.cs" />
     <Compile Include="RestContract\AnodeState.cs" />
     <Compile Include="RestContract\AnodeStateDescription.cs" />
-    <Compile Include="RestContract\AnodeStatesColors.cs" />
+    <Compile Include="RestContract\AnodeStateColor.cs" />
     <Compile Include="RestContract\Comment.cs" />
-    <Compile Include="RestContract\PotroomPotes.cs" />
+    <Compile Include="RestContract\PotroomPots.cs" />
     <Compile Include="RestContract\PotMode.cs" />
     <Compile Include="RestContract\PotModeDescription.cs" />
     <Compile Include="RestContract\PotTask.cs" />
     <Compile Include="RestContract\IRestBridgeContract.cs" />
     <Compile Include="RestContract\PotroomNetwork.cs" />
-    <Compile Include="RestContract\ShiftTaskInterval.cs" />
-    <Compile Include="RestContract\SoftDescription.cs" />
+    <Compile Include="RestContract\BridgeConfiguration.cs" />
     <Compile Include="RestContract\ShiftTaskDescription.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RestContract\TimeFormates.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

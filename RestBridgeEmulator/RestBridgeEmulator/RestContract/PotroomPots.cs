@@ -6,12 +6,12 @@
     /// Список электролизеров корпуса.
     /// </summary>
     [DataContract]
-    public class PotroomPotes
+    public class PotroomPots
     {
         [DataMember(Order = 1, Name = "potroomNumber")]
         public int PotroomNumber { get; set; }
 
-        [DataMember(Order = 2, Name = "potes")]
-        public int[] Potes { get; set; }
+        [DataMember(Order = 2, Name = "pots")]
+        public int[] Pots { get; set; }
     }
 }
