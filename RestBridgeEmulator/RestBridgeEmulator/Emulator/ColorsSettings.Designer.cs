@@ -62,12 +62,12 @@ namespace RestBridgeEmulator.Emulator {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("d4b853")]
-        public string CANCELED_ANODE_REPLACE {
+        public string UNSCHEDULED_ANODE_REPLACEMENT {
             get {
-                return ((string)(this["CANCELED_ANODE_REPLACE"]));
+                return ((string)(this["UNSCHEDULED_ANODE_REPLACEMENT"]));
             }
             set {
-                this["CANCELED_ANODE_REPLACE"] = value;
+                this["UNSCHEDULED_ANODE_REPLACEMENT"] = value;
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RestBridgeEmulator.Emulator" GeneratedClassName="Colors">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RestBridgeEmulator.Emulator" GeneratedClassName="ColorsSettings">
   <Profiles />
   <Settings>
     <Setting Name="EMPTY" Type="System.String" Scope="User">
@@ -11,7 +11,7 @@
     <Setting Name="ANODE_REPLACED" Type="System.String" Scope="User">
       <Value Profile="(Default)">e0a467</Value>
     </Setting>
-    <Setting Name="CANCELED_ANODE_REPLACE" Type="System.String" Scope="User">
+    <Setting Name="UNSCHEDULED_ANODE_REPLACEMENT" Type="System.String" Scope="User">
       <Value Profile="(Default)">d4b853</Value>
     </Setting>
   </Settings>

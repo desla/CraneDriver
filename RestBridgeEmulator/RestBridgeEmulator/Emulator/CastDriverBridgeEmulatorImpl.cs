@@ -251,7 +251,35 @@
                     anodeStateDescription.AnodeNumber == anodeNumber) {
 
                     anodeStateDescription.AnodeStateString = aAnodeState;                    
-                    anodeStateDescription.operationTime = DateTime.Now;                    
+                    anodeStateDescription.operationTime = DateTime.Now;
+
+                    // Все аноды в ванне.
+                    var potAnodesStates = GetAnodesStates(aCraneNumber, aPotroomNumber, aPotNumber);
+                    var shiftTask = shiftTasks.FirstOrDefault(t => t.PotroomNumber == potroomNumber);
+                    var findEmptyAnode = false;
+                    if (shiftTask != null) {
+                        if (shiftTask.AnodesReplaceTasks != null) {
+                            var replaceTask = shiftTask.AnodesReplaceTasks.FirstOrDefault(r => r.PotNumber == potNumber);
+                            if (replaceTask != null) {
+                                if (replaceTask.AnodeNumbers != null) {
+                                    foreach (var number in replaceTask.AnodeNumbers) {
+                                        foreach (var stateDescription in potAnodesStates) {
+                                            if (number == stateDescription.AnodeNumber) {
+                                                if (stateDescription.OperationTimeString == null) {
+                                                    findEmptyAnode = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }                                    
+                                }
+
+                                if (!findEmptyAnode) {
+                                    replaceTask.operationTime = anodeStateDescription.operationTime;
+                                }
+                            }
+                        }                        
+                    }                    
 
                     return anodeStateDescription;
                 }
@@ -306,9 +334,9 @@
                 ShiftTaskInterval = Convert.ToInt32(properties.ShiftTaskRequestInterval),
                 Colors = new AnodeStateColor[] {
                     new AnodeStateColor{ Name = "EMPTY", Color  = colors.EMPTY },
-                    new AnodeStateColor{ Name = "ANODE_REPLACED", Color  = colors.ANODE_REPLACED },
-                    new AnodeStateColor{ Name = "CANCELED_ANODE_REPLACE", Color  = colors.CANCELED_ANODE_REPLACE },
+                    new AnodeStateColor{ Name = "ANODE_REPLACED", Color  = colors.ANODE_REPLACED },                    
                     new AnodeStateColor{ Name = "NEED_ANODE_REPLACE", Color  = colors.NEED_ANODE_REPLACE },
+                    new AnodeStateColor{ Name = "UNSCHEDULED_ANODE_REPLACEMENT", Color  = colors.UNSCHEDULED_ANODE_REPLACEMENT },
                 }
             };
         }
