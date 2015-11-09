@@ -192,6 +192,26 @@
                 if (potModeDescription.PotroomNumber == potroomNumber &&
                     potModeDescription.PotNumber == potNumber) {
                     potModeDescription.PotModeString = aPotMode;
+
+                    var potroomTask = shiftTasks.FirstOrDefault(t => t.PotroomNumber == potroomNumber);                    
+                    if (potroomTask != null) {
+                        PotTask task = null;
+                        switch (potModeDescription.mode) {
+                            case PotMode.FRAME_CHANGE:
+                                task = potroomTask.FrameChangeTasks.FirstOrDefault(t => t.PotNumber == potNumber);
+                                break;
+                            case PotMode.HOPPER_FILL:
+                                task = potroomTask.HopperFillTasks.FirstOrDefault(t => t.PotNumber == potNumber);
+                                break;
+                            case PotMode.POT_FILL:
+                                task = potroomTask.PotFillTasks.FirstOrDefault(t => t.PotNumber == potNumber);
+                                break;
+                        }
+                        if (task != null) {
+                            task.operationTime = DateTime.Now;
+                        }
+                    }
+
                     return potModeDescription;
                 }
             }

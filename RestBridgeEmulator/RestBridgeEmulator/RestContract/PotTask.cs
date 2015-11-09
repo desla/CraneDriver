@@ -16,7 +16,7 @@
         /// Номер электролизера.
         /// </summary>
         [DataMember(Order = 1, Name = "potNumber")]
-        public int PotNumber { get; set; }
+        public int PotNumber { get; set; }        
 
         /// <summary>
         /// Плановое время.
@@ -35,7 +35,32 @@
             }
         }
 
+        /// <summary>
+        /// Плановое время.
+        /// </summary>
+        [DataMember(Order = 3, Name = "operationTime", EmitDefaultValue = false)]
+        public string OperationTimeString
+        {
+            get 
+            { 
+                return operationTime == DateTime.MinValue ?
+                        null:
+                        operationTime.ToString(TimeFormates.iso8601); 
+            }
+            set
+            {
+                if (!DateTime.TryParse(value, out operationTime)) {
+                    throw new WebFaultException<string>(
+                        string.Format("Не удалось привести '{0}' ко времени.", value),
+                        HttpStatusCode.NotAcceptable);
+                }
+            }
+        }
+
         [IgnoreDataMember]
         public DateTime time;
+
+        [IgnoreDataMember]
+        public DateTime operationTime;
     }
 }
