@@ -12,7 +12,7 @@
       <Value Profile="(Default)">e0a467</Value>
     </Setting>
     <Setting Name="UNSCHEDULED_ANODE_REPLACEMENT" Type="System.String" Scope="User">
-      <Value Profile="(Default)">d4b853</Value>
+      <Value Profile="(Default)">d4b851</Value>
     </Setting>
   </Settings>
 </SettingsFile>
