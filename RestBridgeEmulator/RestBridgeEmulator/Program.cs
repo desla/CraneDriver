@@ -34,7 +34,7 @@
 
             Console.WriteLine("Запуск сервера...");
             server.Open();
-            Console.WriteLine("Сервер запущен. Для остановки нажмите Enter.");
+            Console.WriteLine("Сервер запущен. Адрес сервера: {0}\nДля остановки нажмите Enter.", properties.host);
 
             Console.ReadLine();
             Console.WriteLine("Остановка сервера...");
