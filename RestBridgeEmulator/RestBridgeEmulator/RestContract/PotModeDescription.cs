@@ -20,11 +20,21 @@
         [DataMember(Order = 3, Name = "currentPotMode")]
         public string PotModeString
         {
-            get { return mode.ToString(); }
+            get {
+                if (mode == null) {
+                    return null;
+                }                
+                return mode.ToString();
+            }
             set
             {
-                if (!Enum.TryParse(value, out mode)) {
-                    var names = Enum.GetNames(typeof (PotMode));
+                PotMode tMode;
+                if (value == null) {
+                    mode = null;
+                    return;
+                }
+                if (!Enum.TryParse(value, out tMode)) {
+                    var names = Enum.GetNames(typeof(PotMode));
                     var validValues = string.Empty;
                     for (var i = 0; i < names.Length; ++i) {
                         validValues += names[i];
@@ -41,6 +51,6 @@
         }
 
         [IgnoreDataMember]
-        public PotMode mode;
+        public PotMode? mode;
     }
 }

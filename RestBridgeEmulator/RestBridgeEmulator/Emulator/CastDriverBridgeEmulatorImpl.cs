@@ -167,6 +167,15 @@
             foreach (var potModeDescription in potsModes) {
                 if (potModeDescription.PotroomNumber == potroomNumber &&
                     potModeDescription.PotNumber == potNumber) {
+
+                    if (cranNumber == 321) {
+                        return new PotModeDescription {
+                            PotNumber = potModeDescription.PotNumber,
+                            PotroomNumber = potModeDescription.PotroomNumber,
+                            mode = null
+                        };
+                    }
+
                     return potModeDescription;
                 }
             }
@@ -247,8 +256,8 @@
                                   "и номером электролизера {1} не найден.",
                                   potroomNumber, potNumber),
                     HttpStatusCode.NotFound);
-            }            
-
+            }
+            
             return result.ToArray();            
         }
 
