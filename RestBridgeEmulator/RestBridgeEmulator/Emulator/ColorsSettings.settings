@@ -6,13 +6,16 @@
       <Value Profile="(Default)">ffca86</Value>
     </Setting>
     <Setting Name="NEED_ANODE_REPLACE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">fff8f0</Value>
+      <Value Profile="(Default)">996666</Value>
     </Setting>
     <Setting Name="ANODE_REPLACED" Type="System.String" Scope="User">
-      <Value Profile="(Default)">e0a467</Value>
+      <Value Profile="(Default)">a47c45</Value>
     </Setting>
     <Setting Name="UNSCHEDULED_ANODE_REPLACEMENT" Type="System.String" Scope="User">
       <Value Profile="(Default)">d4b851</Value>
+    </Setting>
+    <Setting Name="CANCELED_ANODE_REPLACE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">e60548</Value>
     </Setting>
   </Settings>
 </SettingsFile>

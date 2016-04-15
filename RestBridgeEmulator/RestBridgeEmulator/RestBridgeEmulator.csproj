@@ -97,7 +97,9 @@
     <Compile Include="RestContract\TimeFormates.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Emulator\ColorsSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>ColorsSettings.Designer.cs</LastGenOutput>

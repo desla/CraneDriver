@@ -366,6 +366,7 @@
                     new AnodeStateColor{ Name = "ANODE_REPLACED", Color  = colors.ANODE_REPLACED },                    
                     new AnodeStateColor{ Name = "NEED_ANODE_REPLACE", Color  = colors.NEED_ANODE_REPLACE },
                     new AnodeStateColor{ Name = "UNSCHEDULED_ANODE_REPLACEMENT", Color  = colors.UNSCHEDULED_ANODE_REPLACEMENT },
+                    new AnodeStateColor{ Name = "CANCELED_ANODE_REPLACE", Color  = colors.CANCELED_ANODE_REPLACE },
                 }
             };
         }
