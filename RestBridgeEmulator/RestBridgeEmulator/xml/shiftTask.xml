@@ -66,14 +66,59 @@
       <PotTask>
         <PotNumber>6</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
+        <AnodeNumbers>
+          <int>1</int>
+          <int>5</int>
+          <int>7</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>1</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>5</AnodeNumber>
+            <Text>Со склада</Text>
+          </Comment>
+        </Comments>
       </PotTask>
       <PotTask>
         <PotNumber>8</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
+        <AnodeNumbers>
+          <int>1</int>
+          <int>5</int>
+          <int>7</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>1</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>5</AnodeNumber>
+            <Text>Со склада</Text>
+          </Comment>
+        </Comments>
       </PotTask>
       <PotTask>
         <PotNumber>9</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
+        <AnodeNumbers>
+          <int>1</int>
+          <int>5</int>
+          <int>7</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>1</AnodeNumber>
+            <Text>Огарки</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>5</AnodeNumber>
+            <Text>Со склада</Text>
+          </Comment>
+        </Comments>
       </PotTask>
     </PotFillTasks>
     <HopperFillTasks>

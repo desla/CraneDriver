@@ -57,6 +57,18 @@
             }
         }
 
+        /// <summary>
+        /// Номера анодов для замены.
+        /// </summary>
+        [DataMember(Order = 4, Name = "anodes")]
+        public int[] AnodeNumbers { get; set; }
+
+        /// <summary>
+        /// Комментарии к анодам.
+        /// </summary>
+        [DataMember(Order = 5, Name = "anodesComments")]
+        public Comment[] Comments { get; set; }
+
         [IgnoreDataMember]
         public DateTime time;
 
