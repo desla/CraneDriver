@@ -25,21 +25,25 @@
         {
             get { return state.ToString(); }
             set
-            {
-                if (!Enum.TryParse(value, out state)) {
-                    var names = Enum.GetNames(typeof(AnodeState));
-                    var validValues = string.Empty;
-                    for (var i = 0; i < names.Length; ++i) {
-                        validValues += names[i];
-                        if (i < names.Length - 1) {
-                            validValues += ", ";
-                        }
+            {                
+                var validNames = Enum.GetNames(typeof(AnodeState));
+                foreach (var name in validNames) {
+                    if (name.Equals(value)) {
+                        Enum.TryParse(value, out state);
+                        return;
                     }
-                    throw new WebFaultException<string>(
-                        string.Format("Не удалось привести '{0}' к AnodeState. " +
-                                      "Допустимые значения: {1}", value, validValues),
-                        HttpStatusCode.NotAcceptable);
                 }
+                var validValues = string.Empty;
+                for (var i = 0; i < validNames.Length; ++i) {
+                    validValues += validNames[i];
+                    if (i < validNames.Length - 1) {
+                        validValues += ", ";
+                    }
+                }
+                throw new WebFaultException<string>(
+                    string.Format("Не удалось привести '{0}' к AnodeState. " +
+                                    "Допустимые значения: {1}", value, validValues),
+                    HttpStatusCode.NotAcceptable);             
             }
         }
         
