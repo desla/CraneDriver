@@ -71,6 +71,17 @@
 
         [OperationContract]
         [WebInvoke(Method = "GET",
+                   UriTemplate = "/setAnodeCoveringState/?craneNumber={aCraneNumber}" +
+                                                "&potroomNumber={aPotroomNumber}" +
+                                                "&potNumber={aPotNumber}" +
+                                                "&anodeNumber={aAnodeNumber}" +
+                                                "&coveringState={aCoveringState}")]
+        [Description("Возвращает текущие статусы всех анодов в корпусе на электролизере.")]
+        AnodeStateDescription SetAnodeCoveringState(string aCraneNumber, string aPotroomNumber, string aPotNumber,
+            string aAnodeNumber, string aCoveringState);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
                    UriTemplate = "/getPotroomPots/?craneNumber={aCraneNumber}" +
                                                  "&potroomNumber={aPotroomNumber}")]
         [Description("Возвращает список всех анодов в корпусе.")]

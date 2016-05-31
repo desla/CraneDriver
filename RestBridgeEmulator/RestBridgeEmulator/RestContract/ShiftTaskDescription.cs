@@ -52,8 +52,8 @@
         /// <summary>
         /// Задания для операции "Засыпка".
         /// </summary>
-        [DataMember(Order = 5, Name = "potFill")]
-        public PotTask[] PotFillTasks { get; set; }
+        [DataMember(Order = 5, Name = "anodesCovering")]
+        public AnodesCoveringTask[] AnodesCoveringTasks { get; set; }
 
         /// <summary>
         /// Задания для операции "Засыпка бункеров".

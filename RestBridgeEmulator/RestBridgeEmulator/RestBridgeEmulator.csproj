@@ -79,11 +79,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>VersionSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RestContract\AnodesCoveringTask.cs" />
     <Compile Include="RestContract\AnodesReplaceTask.cs" />
     <Compile Include="RestContract\AnodeState.cs" />
     <Compile Include="RestContract\AnodeStateDescription.cs" />
     <Compile Include="RestContract\AnodeStateColor.cs" />
     <Compile Include="RestContract\Comment.cs" />
+    <Compile Include="RestContract\CoveringState.cs" />
     <Compile Include="RestContract\PotroomPots.cs" />
     <Compile Include="RestContract\PotMode.cs" />
     <Compile Include="RestContract\PotModeDescription.cs" />

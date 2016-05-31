@@ -62,8 +62,8 @@
         <TimeString>16.10.2015 12:42:44</TimeString>
       </PotTask>
     </FrameChangeTasks>
-    <PotFillTasks>
-      <PotTask>
+    <AnodesCoveringTasks>
+      <AnodesCoveringTask>
         <PotNumber>6</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
         <AnodeNumbers>
@@ -74,15 +74,15 @@
         <Comments>
           <Comment>
             <AnodeNumber>1</AnodeNumber>
-            <Text>Огарки</Text>
+            <Text>Двойным слоем</Text>
           </Comment>
           <Comment>
             <AnodeNumber>5</AnodeNumber>
-            <Text>Со склада</Text>
+            <Text>Торец не сыпать</Text>
           </Comment>
         </Comments>
-      </PotTask>
-      <PotTask>
+      </AnodesCoveringTask>
+      <AnodesCoveringTask>
         <PotNumber>8</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
         <AnodeNumbers>
@@ -93,15 +93,15 @@
         <Comments>
           <Comment>
             <AnodeNumber>1</AnodeNumber>
-            <Text>Огарки</Text>
+            <Text>Двойным слоем</Text>
           </Comment>
           <Comment>
             <AnodeNumber>5</AnodeNumber>
-            <Text>Со склада</Text>
+            <Text>Торец не сыпать</Text>
           </Comment>
         </Comments>
-      </PotTask>
-      <PotTask>
+      </AnodesCoveringTask>
+      <AnodesCoveringTask>
         <PotNumber>9</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
         <AnodeNumbers>
@@ -112,15 +112,15 @@
         <Comments>
           <Comment>
             <AnodeNumber>1</AnodeNumber>
-            <Text>Огарки</Text>
+            <Text>Двойным слоем</Text>
           </Comment>
           <Comment>
             <AnodeNumber>5</AnodeNumber>
-            <Text>Со склада</Text>
+            <Text>Торец не сыпать</Text>
           </Comment>
         </Comments>
-      </PotTask>
-    </PotFillTasks>
+      </AnodesCoveringTask>
+    </AnodesCoveringTasks>
     <HopperFillTasks>
       <PotTask>
         <PotNumber>3</PotNumber>

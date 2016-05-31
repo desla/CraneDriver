@@ -108,22 +108,24 @@
 
                     task.FrameChangeTasks = frameTasks.ToArray();
                     break;
-                case "POT_FILL":
-                    foreach (var potFillTask in task.PotFillTasks) {
-                        if (potFillTask.PotNumber == potNumber) {
+                case "ANODES_COVERING":
+                    foreach (var coveringTask in task.AnodesCoveringTasks) {
+                        if (coveringTask.PotNumber == potNumber) {
                             throw new WebFaultException<string>(
                                 "Сменное задание на засыпку уже содержит электролизер с номером " + potNumber, 
                                 HttpStatusCode.Conflict);
                         }
                     }
 
-                    var potFillTasks = new List<PotTask>(task.PotFillTasks);
-                    potFillTasks.Add(new PotTask {
+                    var coveringTasks = new List<AnodesCoveringTask>(task.AnodesCoveringTasks);
+                    coveringTasks.Add(new AnodesCoveringTask {
                         PotNumber = potNumber,
-                        time = DateTime.Now                        
+                        time = DateTime.Now,
+                        AnodeNumbers = new int[0],
+                        Comments = new Comment[0]
                     });
 
-                    task.PotFillTasks = potFillTasks.ToArray();
+                    task.AnodesCoveringTasks = coveringTasks.ToArray();
                     break;
                 case "HOPPER_FILL":
                     foreach (var hopperFillTask in task.HopperFillTasks) {
@@ -211,10 +213,7 @@
                                 break;
                             case PotMode.HOPPER_FILL:
                                 task = potroomTask.HopperFillTasks.FirstOrDefault(t => t.PotNumber == potNumber);
-                                break;
-                            case PotMode.POT_FILL:
-                                task = potroomTask.PotFillTasks.FirstOrDefault(t => t.PotNumber == potNumber);
-                                break;
+                                break;                            
                         }
                         if (task != null) {
                             task.operationTime = DateTime.Now;
@@ -309,6 +308,66 @@
                             }
                         }                        
                     }                    
+
+                    return anodeStateDescription;
+                }
+            }
+
+            throw new WebFaultException<string>(
+                    String.Format("Анода с номером корпуса {0}, " +
+                                  "номером электролизера {1} и " +
+                                  "номером анода {2} не найдено.",
+                                  aPotroomNumber, aPotNumber, anodeNumber),
+                    HttpStatusCode.NotFound);
+        }
+
+        public AnodeStateDescription SetAnodeCoveringState(string aCraneNumber, string aPotroomNumber, string aPotNumber, string aAnodeNumber, string aCoveringState) {
+            Console.WriteLine("Запрос на изменение состояния засыпки анода {0} " +
+                              "в корпусе {1} на электролизере {2}, состояние: {3}",
+                              aAnodeNumber, aPotroomNumber, aPotNumber, aCoveringState);
+            var cranNumber = ArgumentConverter.ToInt32(aCraneNumber, "Номер крана");
+            Console.WriteLine("Номер крана: " + cranNumber);
+
+            var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");
+            var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");
+            var anodeNumber = ArgumentConverter.ToInt32(aAnodeNumber, "Номер анода");
+
+            for (var i = 0; i < anodesStates.Length; ++i) {
+                var anodeStateDescription = anodesStates[i];
+                if (anodeStateDescription.PotroomNumber == potroomNumber &&
+                    anodeStateDescription.PotNumber == potNumber &&
+                    anodeStateDescription.AnodeNumber == anodeNumber) {
+
+                    anodeStateDescription.CoveringStateString = aCoveringState;
+                    anodeStateDescription.coveringTime = DateTime.Now;
+
+                    // Все аноды в ванне.
+                    var potAnodesStates = GetAnodesStates(aCraneNumber, aPotroomNumber, aPotNumber);
+                    var shiftTask = shiftTasks.FirstOrDefault(t => t.PotroomNumber == potroomNumber);
+                    var findEmptyAnode = false;
+                    if (shiftTask != null) {
+                        if (shiftTask.AnodesCoveringTasks != null) {
+                            var coveringTask = shiftTask.AnodesCoveringTasks.FirstOrDefault(r => r.PotNumber == potNumber);
+                            if (coveringTask != null) {
+                                if (coveringTask.AnodeNumbers != null) {
+                                    foreach (var number in coveringTask.AnodeNumbers) {
+                                        foreach (var stateDescription in potAnodesStates) {
+                                            if (number == stateDescription.AnodeNumber) {
+                                                if (stateDescription.CoveringTimeString == null) {
+                                                    findEmptyAnode = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (!findEmptyAnode) {
+                                    coveringTask.operationTime = anodeStateDescription.coveringTime;
+                                }
+                            }
+                        }
+                    }
 
                     return anodeStateDescription;
                 }
@@ -444,7 +503,7 @@
             using (var file = new FileStream("xml/potroomNetwork.xml", FileMode.Open)) {
                 potroomNetwork = (PotroomNetwork[])serializer.Deserialize(file);
             }
-        }
+        }        
 
         #endregion
     }

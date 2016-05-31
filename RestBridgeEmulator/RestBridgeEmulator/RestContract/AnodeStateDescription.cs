@@ -47,7 +47,7 @@
             }
         }
         
-        [DataMember(Order = 5, Name = "lastUpdateTime", EmitDefaultValue = false)]
+        [DataMember(Order = 5, Name = "operationTime", EmitDefaultValue = false)]
         public string OperationTimeString
         {
             get
@@ -67,10 +67,58 @@
             }
         }
 
+        [DataMember(Order = 4, Name = "currentCoveringState")]
+        public string CoveringStateString {
+            get { return coveringState.ToString(); }
+            set {
+                var validNames = Enum.GetNames(typeof(CoveringState));
+                foreach (var name in validNames) {
+                    if (name.Equals(value)) {
+                        Enum.TryParse(value, out coveringState);
+                        return;
+                    }
+                }
+                var validValues = string.Empty;
+                for (var i = 0; i < validNames.Length; ++i) {
+                    validValues += validNames[i];
+                    if (i < validNames.Length - 1) {
+                        validValues += ", ";
+                    }
+                }
+                throw new WebFaultException<string>(
+                    string.Format("Не удалось привести '{0}' к CoveringState. " +
+                                    "Допустимые значения: {1}", value, validValues),
+                    HttpStatusCode.NotAcceptable);
+            }
+        }
+
+        [DataMember(Order = 5, Name = "coveringTime", EmitDefaultValue = false)]
+        public string CoveringTimeString {
+            get {
+                return coveringTime == DateTime.MinValue ?
+                    null :
+                    coveringTime.ToString(TimeFormates.iso8601);
+            }
+
+            set {
+                if (!DateTime.TryParse(value, out coveringTime)) {
+                    throw new WebFaultException<string>(
+                        string.Format("Не удалось привести '{0}' ко времени.", value),
+                        HttpStatusCode.NotAcceptable);
+                }
+            }
+        }
+
         [IgnoreDataMember]
         public DateTime operationTime;
 
         [IgnoreDataMember]
         public AnodeState state;
+
+        [IgnoreDataMember]
+        public DateTime coveringTime;
+
+        [IgnoreDataMember]
+        public CoveringState coveringState;
     }
 }

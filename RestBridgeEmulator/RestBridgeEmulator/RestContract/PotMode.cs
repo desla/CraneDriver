@@ -21,9 +21,9 @@
         FRAME_CHANGE,
 
         /// <summary>
-        /// Засыпка/
+        /// Засыпка.
         /// </summary>
-        POT_FILL,
+        ANODES_COVERING,
 
         /// <summary>
         /// Заправка бункеров.
