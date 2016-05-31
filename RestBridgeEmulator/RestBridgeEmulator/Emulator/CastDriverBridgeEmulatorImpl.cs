@@ -272,6 +272,10 @@
             var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");
             var anodeNumber = ArgumentConverter.ToInt32(aAnodeNumber, "Номер анода");
 
+            if (aAnodeState == null) {
+                aAnodeState = "";
+            }
+
             for (var i = 0; i < anodesStates.Length; ++i) {             
                 var anodeStateDescription = anodesStates[i];
                 if (anodeStateDescription.PotroomNumber == potroomNumber &&
@@ -309,7 +313,17 @@
                         }                        
                     }                    
 
-                    return anodeStateDescription;
+                    var result = new AnodeStateDescription {
+                        PotroomNumber = potroomNumber,
+                        PotNumber = potroomNumber,
+                        AnodeNumber = anodeNumber,
+                        AnodeStateString = aAnodeState,
+                        operationTime = anodeStateDescription.operationTime,
+                        CoveringStateString = null,
+                        CoveringTimeString = null
+                    }; 
+
+                    return result;
                 }
             }
 
@@ -331,6 +345,10 @@
             var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");
             var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");
             var anodeNumber = ArgumentConverter.ToInt32(aAnodeNumber, "Номер анода");
+
+            if (aCoveringState == null) {
+                aCoveringState = "";
+            }
 
             for (var i = 0; i < anodesStates.Length; ++i) {
                 var anodeStateDescription = anodesStates[i];
@@ -369,7 +387,17 @@
                         }
                     }
 
-                    return anodeStateDescription;
+                    var result = new AnodeStateDescription {
+                        PotroomNumber = potroomNumber,
+                        PotNumber = potroomNumber,
+                        AnodeNumber = anodeNumber,
+                        AnodeStateString = null,
+                        OperationTimeString = null,
+                        CoveringStateString = aCoveringState,
+                        coveringTime = anodeStateDescription.coveringTime
+                    };
+
+                    return result;
                 }
             }
 
