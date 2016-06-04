@@ -20,26 +20,16 @@
         [DataMember(Order = 3, Name = "anodeNumber")]
         public int AnodeNumber { get; set; }
 
-        [DataMember(Order = 4, Name = "currentAnodeState", EmitDefaultValue = false)]
+        [DataMember(Order = 4, Name = "currentAnodeState")]
         public string AnodeStateString
         {
-            get {
-                if (state == null) {
-                    return null;
-                }
-                return state.ToString(); }
+            get { return state.ToString(); }
             set
-            {
-                if (value == null) {
-                    state = null;
-                    return;
-                }
+            {                
                 var validNames = Enum.GetNames(typeof(AnodeState));
                 foreach (var name in validNames) {
                     if (name.Equals(value)) {
-                        AnodeState tstate;
-                        Enum.TryParse(value, out tstate);
-                        state = tstate;
+                        Enum.TryParse(value, out state);
                         return;
                     }
                 }
@@ -69,10 +59,6 @@
 
             set
             {
-                if (value == null) {
-                    operationTime = DateTime.MinValue;
-                    return;
-                }
                 if (!DateTime.TryParse(value, out operationTime)) {
                     throw new WebFaultException<string>(
                         string.Format("Не удалось привести '{0}' ко времени.", value),
@@ -81,26 +67,14 @@
             }
         }
 
-        [DataMember(Order = 4, Name = "currentCoveringState", EmitDefaultValue = false)]
+        [DataMember(Order = 4, Name = "currentCoveringState")]
         public string CoveringStateString {
-            get {
-                if (coveringState == null) {
-                    return null;
-                }
-                return coveringState.ToString(); }
+            get { return coveringState.ToString(); }
             set {
-
-                if (value == null) {
-                    coveringState = null;
-                    return;
-                }
-
                 var validNames = Enum.GetNames(typeof(CoveringState));
                 foreach (var name in validNames) {
                     if (name.Equals(value)) {
-                        CoveringState state;
-                        Enum.TryParse(value, out state);
-                        coveringState = state;
+                        Enum.TryParse(value, out coveringState);
                         return;
                     }
                 }
@@ -127,10 +101,6 @@
             }
 
             set {
-                if (value == null) {
-                    coveringTime = DateTime.MinValue;
-                    return;
-                }
                 if (!DateTime.TryParse(value, out coveringTime)) {
                     throw new WebFaultException<string>(
                         string.Format("Не удалось привести '{0}' ко времени.", value),
@@ -143,12 +113,12 @@
         public DateTime operationTime;
 
         [IgnoreDataMember]
-        public AnodeState? state;
+        public AnodeState state;
 
         [IgnoreDataMember]
         public DateTime coveringTime;
 
         [IgnoreDataMember]
-        public CoveringState? coveringState;
+        public CoveringState coveringState;
     }
 }

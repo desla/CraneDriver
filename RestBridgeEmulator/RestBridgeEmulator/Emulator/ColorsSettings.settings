@@ -17,5 +17,17 @@
     <Setting Name="CANCELED_ANODE_REPLACE" Type="System.String" Scope="User">
       <Value Profile="(Default)">e60548</Value>
     </Setting>
+    <Setting Name="NEED_ANODE_COVERING" Type="System.String" Scope="User">
+      <Value Profile="(Default)">996666</Value>
+    </Setting>
+    <Setting Name="ANODE_COVERED" Type="System.String" Scope="User">
+      <Value Profile="(Default)">a47c45</Value>
+    </Setting>
+    <Setting Name="UNSCHEDULED_ANODE_COVERING" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d4b851</Value>
+    </Setting>
+    <Setting Name="CANCELED_ANODE_COVERING" Type="System.String" Scope="User">
+      <Value Profile="(Default)">e60548</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

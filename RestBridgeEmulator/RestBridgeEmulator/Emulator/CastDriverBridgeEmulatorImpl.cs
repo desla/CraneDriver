@@ -272,10 +272,6 @@
             var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");
             var anodeNumber = ArgumentConverter.ToInt32(aAnodeNumber, "Номер анода");
 
-            if (aAnodeState == null) {
-                aAnodeState = "";
-            }
-
             for (var i = 0; i < anodesStates.Length; ++i) {             
                 var anodeStateDescription = anodesStates[i];
                 if (anodeStateDescription.PotroomNumber == potroomNumber &&
@@ -313,17 +309,7 @@
                         }                        
                     }                    
 
-                    var result = new AnodeStateDescription {
-                        PotroomNumber = potroomNumber,
-                        PotNumber = potroomNumber,
-                        AnodeNumber = anodeNumber,
-                        AnodeStateString = aAnodeState,
-                        operationTime = anodeStateDescription.operationTime,
-                        CoveringStateString = null,
-                        CoveringTimeString = null
-                    }; 
-
-                    return result;
+                    return anodeStateDescription;
                 }
             }
 
@@ -345,10 +331,6 @@
             var potroomNumber = ArgumentConverter.ToInt32(aPotroomNumber, "Номер корпуса");
             var potNumber = ArgumentConverter.ToInt32(aPotNumber, "Номер электролизера");
             var anodeNumber = ArgumentConverter.ToInt32(aAnodeNumber, "Номер анода");
-
-            if (aCoveringState == null) {
-                aCoveringState = "";
-            }
 
             for (var i = 0; i < anodesStates.Length; ++i) {
                 var anodeStateDescription = anodesStates[i];
@@ -387,17 +369,7 @@
                         }
                     }
 
-                    var result = new AnodeStateDescription {
-                        PotroomNumber = potroomNumber,
-                        PotNumber = potroomNumber,
-                        AnodeNumber = anodeNumber,
-                        AnodeStateString = null,
-                        OperationTimeString = null,
-                        CoveringStateString = aCoveringState,
-                        coveringTime = anodeStateDescription.coveringTime
-                    };
-
-                    return result;
+                    return anodeStateDescription;
                 }
             }
 
@@ -454,6 +426,10 @@
                     new AnodeStateColor{ Name = "NEED_ANODE_REPLACE", Color  = colors.NEED_ANODE_REPLACE },
                     new AnodeStateColor{ Name = "UNSCHEDULED_ANODE_REPLACEMENT", Color  = colors.UNSCHEDULED_ANODE_REPLACEMENT },
                     new AnodeStateColor{ Name = "CANCELED_ANODE_REPLACE", Color  = colors.CANCELED_ANODE_REPLACE },
+                    new AnodeStateColor{ Name = "NEED_ANODE_COVERING", Color  = colors.NEED_ANODE_COVERING },
+                    new AnodeStateColor{ Name = "ANODE_COVERED", Color  = colors.ANODE_COVERED },
+                    new AnodeStateColor{ Name = "UNSCHEDULED_ANODE_COVERING", Color  = colors.UNSCHEDULED_ANODE_COVERING },
+                    new AnodeStateColor{ Name = "CANCELED_ANODE_COVERING", Color  = colors.CANCELED_ANODE_COVERING },
                 }
             };
         }
