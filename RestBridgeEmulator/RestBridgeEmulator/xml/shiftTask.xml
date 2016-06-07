@@ -64,7 +64,7 @@
     </FrameChangeTasks>
     <AnodesCoveringTasks>
       <AnodesCoveringTask>
-        <PotNumber>6</PotNumber>
+        <PotNumber>5</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
         <AnodeNumbers>
           <int>1</int>
@@ -194,20 +194,65 @@
         <TimeString>16.10.2015 12:42:44</TimeString>
       </PotTask>
     </FrameChangeTasks>
-    <PotFillTasks>
-      <PotTask>
+    <AnodesCoveringTasks>
+      <AnodesCoveringTask>
         <PotNumber>6</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
-      </PotTask>
-      <PotTask>
+        <AnodeNumbers>
+          <int>1</int>
+          <int>5</int>
+          <int>7</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>1</AnodeNumber>
+            <Text>Двойным слоем</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>5</AnodeNumber>
+            <Text>Торец не сыпать</Text>
+          </Comment>
+        </Comments>
+      </AnodesCoveringTask>
+      <AnodesCoveringTask>
         <PotNumber>8</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
-      </PotTask>
-      <PotTask>
+        <AnodeNumbers>
+          <int>1</int>
+          <int>5</int>
+          <int>7</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>1</AnodeNumber>
+            <Text>Двойным слоем</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>5</AnodeNumber>
+            <Text>Торец не сыпать</Text>
+          </Comment>
+        </Comments>
+      </AnodesCoveringTask>
+      <AnodesCoveringTask>
         <PotNumber>9</PotNumber>
         <TimeString>16.10.2015 12:42:44</TimeString>
-      </PotTask>
-    </PotFillTasks>
+        <AnodeNumbers>
+          <int>1</int>
+          <int>5</int>
+          <int>7</int>
+        </AnodeNumbers>
+        <Comments>
+          <Comment>
+            <AnodeNumber>1</AnodeNumber>
+            <Text>Двойным слоем</Text>
+          </Comment>
+          <Comment>
+            <AnodeNumber>5</AnodeNumber>
+            <Text>Торец не сыпать</Text>
+          </Comment>
+        </Comments>
+      </AnodesCoveringTask>
+    </AnodesCoveringTasks>
     <HopperFillTasks>
       <PotTask>
         <PotNumber>3</PotNumber>

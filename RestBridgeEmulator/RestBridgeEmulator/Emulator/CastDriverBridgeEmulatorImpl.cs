@@ -472,6 +472,18 @@
                         }
                     }
                 }
+
+                foreach (var anodesCoveringTask in task.AnodesCoveringTasks) {
+                    foreach (var anodeNumber in anodesCoveringTask.AnodeNumbers) {
+                        foreach (var anodeStateDescription in states) {
+                            if (anodeStateDescription.PotroomNumber == task.PotroomNumber &&
+                                anodeStateDescription.PotNumber == anodesCoveringTask.PotNumber &&
+                                anodeStateDescription.AnodeNumber == anodeNumber) {
+                                anodeStateDescription.coveringState = CoveringState.NEED_ANODE_COVERING;
+                            }
+                        }
+                    }
+                }
             }
             
             anodesStates = states.ToArray();
